@@ -1,0 +1,139 @@
+package com.hibernate.main;
+
+
+import com.hibernate.entity.Doctor;
+import com.hibernate.entity.Donor;
+import com.hibernate.entity.Patient;
+import com.hibernate.service.DoctorService;
+import com.hibernate.service.DonorService;
+import com.hibernate.service.PatientService;
+import com.hibernate.serviceImpl.DoctorServiceImpl;
+import com.hibernate.serviceImpl.DonorServiceImpl;
+import com.hibernate.serviceImpl.PatientServiceImpl;
+
+import java.util.Scanner;
+
+public class BloodBankOperations {
+
+    public static void main(String[] args) {
+        
+        // Create service objects
+        DoctorService doctorService = new DoctorServiceImpl();
+        DonorService donorService = new DonorServiceImpl();
+        PatientService patientService = new PatientServiceImpl();
+        
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        
+        // Continue running the program until the user exits
+        while (true) {
+            System.out.println("\n-- Blood Bank Management System --");
+            System.out.println("1. Add Doctor");
+            System.out.println("2. Add Donor");
+            System.out.println("3. Add Patient");
+            System.out.println("4. View Doctor by ID");
+            System.out.println("5. View Donor by ID");
+            System.out.println("6. View Patient by ID");
+            System.out.println("7. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    // Add a new doctor
+                    System.out.print("Enter doctor's name: ");
+                    scanner.nextLine(); // Consume newline
+                    String doctorName = scanner.nextLine();
+                    System.out.print("Enter doctor's specialization: ");
+                    String specialization = scanner.nextLine();
+                    Doctor doctor = new Doctor();
+                    doctorService.addDoctor(doctor);
+                    System.out.println("Doctor added successfully!");
+                    break;
+
+                case 2:
+                    // Add a new donor
+                    System.out.print("Enter donor's name: ");
+                    scanner.nextLine(); // Consume newline
+                    String donorName = scanner.nextLine();
+                    System.out.print("Enter donor's blood type: ");
+                    String bloodType = scanner.nextLine();
+                    System.out.print("Enter donor's phone number: ");
+                    String phone = scanner.nextLine();
+                    Donor donor = new Donor();
+                    donorService.addDonor(donor);
+                    System.out.println("Donor added successfully!");
+                    break;
+
+                case 3:
+                    // Add a new patient
+                    System.out.print("Enter patient's name: ");
+                    scanner.nextLine(); // Consume newline
+                    String patientName = scanner.nextLine();
+                    System.out.print("Enter patient's blood type: ");
+                    String patientBloodType = scanner.nextLine();
+                    System.out.print("Enter patient's phone number: ");
+                    String patientPhone = scanner.nextLine();
+                    Patient patient = new Patient();
+                    patientService.addPatient(patient);
+                    System.out.println("Patient added successfully!");
+                    break;
+
+                case 4:
+                    // View doctor by ID
+                    System.out.print("Enter doctor ID to view: ");
+                    int doctorId = scanner.nextInt();
+                    Doctor retrievedDoctor = doctorService.getDoctorById(doctorId);
+                    if (retrievedDoctor != null) {
+                        System.out.println("Doctor ID: " + retrievedDoctor.getId());
+                        System.out.println("Name: " + retrievedDoctor.getDoctor_name());
+                        System.out.println("Specialization: " + retrievedDoctor.getSpecialization());
+                    } else {
+                        System.out.println("Doctor not found.");
+                    }
+                    break;
+
+                case 5:
+                    // View donor by ID
+                    System.out.print("Enter donor ID to view: ");
+                    int donorId = scanner.nextInt();
+                    Donor retrievedDonor = donorService.getDonorById(donorId);
+                    if (retrievedDonor != null) {
+                        System.out.println("Donor ID: " + retrievedDonor.getId());
+                        System.out.println("Name: " + retrievedDonor.getDonor_name());
+                        System.out.println("Blood Type: " + retrievedDonor.getBlood_type());
+                        System.out.println("Phone: " + retrievedDonor.getPhone());
+                    } else {
+                        System.out.println("Donor not found.");
+                    }
+                    break;
+
+                case 6:
+                    // View patient by ID
+                    System.out.print("Enter patient ID to view: ");
+                    int patientId = scanner.nextInt();
+                    Patient retrievedPatient = patientService.getPatientById(patientId);
+                    if (retrievedPatient != null) {
+                        System.out.println("Patient ID: " + retrievedPatient.getId());
+                        System.out.println("Name: " + retrievedPatient.getDonor_name());
+                        System.out.println("Blood Type: " + retrievedPatient.getBlood_type());
+                        System.out.println("Phone: " + retrievedPatient.getPhone());
+                    } else {
+                        System.out.println("Patient not found.");
+                    }
+                    break;
+
+                case 7:
+                    // Exit the program
+                    System.out.println("Exiting the program...");
+                    scanner.close();
+                    return; // Exit the main method, stopping the program
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
+
+
